@@ -2,12 +2,10 @@ from scripts.fund_and_withdrow import fund
 from scripts.helpful_scripts import (
     get_account,
     LOCAL_BLOCKCHAIN_ENVIRONMENTS,
-    FORKED_LOCAL_ENVIRONMENTS,
-)
+    FORKED_LOCAL_ENVIRONMENTS,)
 from scripts.deploy import deploy_fund_me
 from brownie import network, accounts, exceptions
 import pytest
-
 
 def test_can_fund_and_withdrow():
     account = get_account()
@@ -19,8 +17,6 @@ def test_can_fund_and_withdrow():
     tx2 = fund_me.withdrow({"from": account})
     tx2.wait(1)
     assert fund_me.addressToAmountFunded(account.address) == 0
-
-
 def test_only_owner_can_withdrow():
     if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         pytest.skip("only for local network testing")
